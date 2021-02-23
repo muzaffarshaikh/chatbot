@@ -1,3 +1,3 @@
 # chatbot-python-test
 
-project to implement and test Python ChatterBot library
+project to implement and test chatbot in python

@@ -3,8 +3,8 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize, sent_tokenize
 
 
-def getSentTokens():
-    pdfFileObj = open('C:/Users/Muzaffar/Desktop/sample_corpus.pdf', 'rb')
+def getSentTokens(filename):
+    pdfFileObj = open(filename, 'rb')
     pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
 
     totalPages = pdfReader.numPages

@@ -1,16 +1,18 @@
-from text_extract_pdf import getSentTokens
-from text_lemmatizer import LemNormalize
-
 import random
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-sentTokens = getSentTokens()
+from text_extract_pdf import getSentTokens
+from text_lemmatizer import LemNormalize
+
+filename = 'C:/Users/Muzaffar/Desktop/sample_corpus.pdf'
+
+sentTokens = getSentTokens(filename)
 
 GREETING_INPUTS = (
     "hello", "hi", "greetings", "sup", "what's up", "hey", "namaste", "whats up", "good morning", "good afternoon",
     "good day")
-GREETING_RESPONSES = ["hi", "hey", "*nods*", "hi there", "hello", "I am glad! You are talking to me"]
+GREETING_RESPONSES = ["hi", "hey", "hi there", "hi there buddy", "hello", "I am glad! You are talking to me", "greetings are boring"]
 
 
 def request(sentence):

@@ -1,6 +1,5 @@
 import PyPDF2
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize, sent_tokenize
+from nltk.tokenize import sent_tokenize
 
 
 def getSentTokens(filename):
@@ -11,6 +10,7 @@ def getSentTokens(filename):
     currentPageNumber = 0
     text = ""
 
+    # iterating over pages
     while currentPageNumber < totalPages:
         pageObj = pdfReader.getPage(0)
         text = text + pageObj.extractText()
@@ -18,6 +18,6 @@ def getSentTokens(filename):
     # print(text)
 
     sentTokens = sent_tokenize(text)
-    #wordTokens = word_tokenize(text)
+    # wordTokens = word_tokenize(text)
 
     return sentTokens

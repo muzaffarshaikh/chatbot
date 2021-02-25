@@ -4,6 +4,7 @@ from text_extract_pdf import getSentTokens
 from cbot_response import response
 
 # getting the filepath
+# check the data directory for 'sample corpus.pdf'
 filename = 'C:/Users/Muzaffar/Desktop/sample_corpus.pdf'
 
 # getSentTokens() from text_extract_pdf.py extracts sentence tokens from the file provided.

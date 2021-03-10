@@ -1,5 +1,7 @@
 # chatbot-python-test
 
+Reference: https://medium.com/analytics-vidhya/building-a-simple-chatbot-in-python-using-nltk-7c8c8215ac6e
+
 A text retrieval chatbot.
 Uses nltk and sklearn python libraries.
 Based on TFIDF Scoring and Cosine Similarity.

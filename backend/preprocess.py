@@ -1,6 +1,5 @@
 import inflect
 import string
-import nltk
 from nltk.stem.porter import PorterStemmer
 from nltk.corpus import stopwords, wordnet
 from nltk.tokenize import word_tokenize, sent_tokenize
@@ -31,9 +30,8 @@ def convert_number_to_word(text):
     return temp_str
 
 
-def remove_punctuation(text):
+def punctuation_removal(text):
     translator = str.maketrans('', '', string.punctuation)
-
     return text.translate(translator)
 
 
@@ -49,13 +47,14 @@ def get_part_of_speech_tags(token):
         "V": wordnet.VERB,
         "R": wordnet.ADV
     }
-    tag = nltk.pos_tag([token])[0][1][0].upper()
+    tag = pos_tag([token])[0][1][0].upper()
     return tag_dict.get(tag, wordnet.NOUN)
 
 
 def get_lemmatized_words(string_data):
     token_list = string_data.split()
-    lemmatized_output_with_POS_information = [lemmatizer.lemmatize(token, get_part_of_speech_tags(token)) for token in token_list]
+    lemmatized_output_with_POS_information = [lemmatizer.lemmatize(token, get_part_of_speech_tags(token)) for token in
+                                              token_list]
     lemmatized_op = ' '.join(lemmatized_output_with_POS_information)
     return lemmatized_op
 
@@ -73,3 +72,20 @@ def get_tokenized_sentences(text):
     tokens = sent_tokenize(text)
     sent_tokens = [word for word in tokens if word not in stop_words]
     return sent_tokens
+
+# def pre_process_data(corpus, number_conversion, remove_punctuation, stemming, lemmatization):
+#
+#     if number_conversion:
+#         corpus = convert_number_to_word(corpus)
+#
+#     if remove_punctuation:
+#         corpus = remove_punctuation(corpus)
+#
+#     if stemming:
+#         corpus = get_stemmed_words(corpus)
+#
+#     if lemmatization:
+#         corpus = get_lemmatized_words(corpus)
+#
+#
+#     return corpus

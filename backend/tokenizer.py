@@ -1,27 +1,38 @@
 from file_reader import data
-from text_preprocessing import convert_number_to_word, remove_punctuation, get_tokenized_words, \
-     get_stemmed_words, get_tokenized_sentences, get_lemmatized_words
+from nltk import pos_tag
 
-# Conversions: lower case, punctuation, number to word, whitespace removal, tokenization
-text = data.lower()
-punct_removed_text = remove_punctuation(text)
+from preprocess import convert_number_to_word, punctuation_removal, get_tokenized_words, \
+    get_stemmed_words, get_tokenized_sentences, get_lemmatized_words
+
+# Conversions: lower case, punctuation, number to word, extra whitespace removal, lemmatize, tokenization
+
+corpus = data.lower()
+corpus_sent = data.lower()
+
+
+punct_removed_text = punctuation_removal(corpus)
+
+
 number_converted_text = convert_number_to_word(punct_removed_text)
 whitespace_removed_text = " ".join(number_converted_text.split())
-
 lem = get_lemmatized_words(whitespace_removed_text)
-print("Text : " + whitespace_removed_text)
-print("Lem Text : " + lem)
+# print("Text : " + whitespace_removed_text)
+# print(lem)
 
-word_tokens = get_tokenized_words(whitespace_removed_text)
-sent_tokens = get_tokenized_sentences(text)
+word_tokens = get_tokenized_words(lem)
+sent_tokens = get_tokenized_sentences(corpus)
+
+# sentences = []
+
+# for entry in sent_tokens:
+#     punct_remove = punctuation_removal(entry)
+#     number_converted = convert_number_to_word(punct_remove)
+#     whitespace_removed = " ".join(number_converted_text.split())
+#     lemmatized = get_lemmatized_words(whitespace_removed)
+#     sentences.append(lemmatized)
 
 
-# stemmed = get_stemmed_words(word_tokens)
-# stemmed words
-# not quite sure if stemming will affect the accuracy
-# some words might lose meaning.
-# did not do lemmatization as of yet
-# stemmed = get_stemmed_words(word_tokens)
-# print(stemmed)
 
-# should speech tagging be done?
+
+
+

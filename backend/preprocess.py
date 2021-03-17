@@ -1,31 +1,27 @@
-import inflect
 import string
+import inflect
 from nltk.stem.porter import PorterStemmer
+from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords, wordnet
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk import pos_tag
 
 # nltk.download('averaged_perceptron_tagger')
 
-from nltk.stem import WordNetLemmatizer
-
+p = inflect.engine()
 stemmer = PorterStemmer()
 lemmatizer = WordNetLemmatizer()
-
-p = inflect.engine()
 
 
 def convert_number_to_word(text):
     temp_str = text.split()
     new_string = []
-
     for word in temp_str:
         if word.isdigit():
             temp = p.number_to_words(word)
             new_string.append(temp)
         else:
             new_string.append(word)
-
     temp_str = ' '.join(new_string)
     return temp_str
 
@@ -53,8 +49,7 @@ def get_part_of_speech_tags(token):
 
 def get_lemmatized_words(string_data):
     token_list = string_data.split()
-    lemmatized_output_with_POS_information = [lemmatizer.lemmatize(token, get_part_of_speech_tags(token)) for token in
-                                              token_list]
+    lemmatized_output_with_POS_information = [lemmatizer.lemmatize(token, get_part_of_speech_tags(token)) for token in token_list]
     lemmatized_op = ' '.join(lemmatized_output_with_POS_information)
     return lemmatized_op
 

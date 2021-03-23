@@ -1,15 +1,22 @@
+import warnings
+
+warnings.filterwarnings("ignore")
+
 import random
 
 from text_extract_pdf import getSentTokens
+from file_read_txt import sent_tokens
 from cbot_response import response
 
 # getting the filepath
 # check the data directory for 'sample corpus.pdf'
-filename = 'C:/Users/Muzaffar/Desktop/sample_corpus.pdf'
+filename = 'data/sample_corpus.pdf'
 
 # getSentTokens() from text_extract_pdf.py extracts sentence tokens from the file provided.
 # issues with files downloaded from internet.
-sentTokens = getSentTokens(filename)
+sentTokens = sent_tokens
+
+print(sentTokens)
 
 GREETING_INPUTS = ("hello", "hi", "greetings", "hey", "namaste", "whats up", "good morning", "good afternoon")
 GREETING_RESPONSES = ["hi", "hey", "hi there", "hello", "I am glad! You are talking to me", "greetings are boring"]
@@ -23,23 +30,29 @@ def greet(sentence):
 
 
 flag = True
-print("Chandler: Hello! I will answer your queries based on the document given to me.")
-print("Chandler: If you want to exit, type Bye")
 
 while flag:
     user_response = input()
+    bot_response = ""
     user_response = user_response.lower()
     if user_response != 'bye':
         if user_response != 'thanks' and user_response != 'thank you':
-            if greet(user_response) is not None:
-                print("Chandler: " + greet(user_response))
+            if user_response != 'okay':
+                if greet(user_response) is not None:
+                    bot_response = bot_response + ("Chandler: " + greet(user_response))
+                    print(bot_response)
+                else:
+                    print("Chandler: ", end="")
+                    bot_response = (response(user_response, sentTokens))
+                    print(bot_response)
+                    sentTokens.remove(user_response)
             else:
-                print("Chandler: ", end="")
-                print(response(user_response, sentTokens))
-                sentTokens.remove(user_response)
+                bot_response = bot_response + "Chandler: I'll Wait."
+                print(bot_response)
         else:
-            flag = False
-            print("Chandler: You are welcome..")
+            bot_response = bot_response + "Chandler: You are welcome.. Anything else i can help you with?"
+            print(bot_response)
     else:
         flag = False
-        print("Chandler: Bye! take care..")
+        bot_response = bot_response + "Chandler: Bye! take care.."
+        print(bot_response)

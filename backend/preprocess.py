@@ -5,8 +5,10 @@ from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords, wordnet
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk import pos_tag
+import nltk
 
 # nltk.download('averaged_perceptron_tagger')
+# nltk.download('stopwords')
 
 p = inflect.engine()
 stemmer = PorterStemmer()

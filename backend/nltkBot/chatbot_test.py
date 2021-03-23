@@ -1,12 +1,10 @@
 import warnings
-
-warnings.filterwarnings("ignore")
-
 import random
 
-from text_extract_pdf import getSentTokens
 from file_read_txt import sent_tokens
 from cbot_response import response
+
+warnings.filterwarnings("ignore")
 
 # getting the filepath
 # check the data directory for 'sample corpus.pdf'

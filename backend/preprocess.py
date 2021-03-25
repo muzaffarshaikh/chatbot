@@ -51,7 +51,8 @@ def get_part_of_speech_tags(token):
 
 def get_lemmatized_words(string_data):
     token_list = string_data.split()
-    lemmatized_output_with_POS_information = [lemmatizer.lemmatize(token, get_part_of_speech_tags(token)) for token in token_list]
+    lemmatized_output_with_POS_information = [lemmatizer.lemmatize(token, get_part_of_speech_tags(token)) for token in
+                                              token_list]
     lemmatized_op = ' '.join(lemmatized_output_with_POS_information)
     return lemmatized_op
 
@@ -69,6 +70,13 @@ def get_tokenized_sentences(text):
     tokens = sent_tokenize(text)
     sent_tokens = [word for word in tokens if word not in stop_words]
     return sent_tokens
+
+
+def preprocess(text):
+    t1 = punctuation_removal(text)
+    t2 = get_lemmatized_words(t1)
+    t3 = convert_number_to_word(t2)
+    return t3
 
 # def pre_process_data(corpus, number_conversion, remove_punctuation, stemming, lemmatization):
 #

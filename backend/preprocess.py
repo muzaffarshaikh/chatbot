@@ -75,8 +75,7 @@ def get_tokenized_sentences(text):
 def preprocess(text):
     t1 = punctuation_removal(text)
     t2 = get_lemmatized_words(t1)
-    t3 = convert_number_to_word(t2)
-    return t3
+    return t2
 
 # def pre_process_data(corpus, number_conversion, remove_punctuation, stemming, lemmatization):
 #

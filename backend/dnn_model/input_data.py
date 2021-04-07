@@ -41,6 +41,7 @@ training = []
 output = []
 # create an empty array for output
 output_empty = [0] * len(classes)
+print(output_empty)
 
 for doc in documents:
     # initialize bag_of_words of words
@@ -68,9 +69,11 @@ training = array(training, dtype=object)
 features = list(training[:, 0])  # features
 train_classes = list(training[:, 1])  # classes
 
-train_features = features[:25]
+print(len(features))
+
+train_features = features[:(len(features) - 5)]
 print(len(train_features))
-test_features = features[-4:]
+test_features = features[-5:]
 print(len(test_features))
 
 print("\n\n")

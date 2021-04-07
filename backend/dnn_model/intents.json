@@ -1,7 +1,7 @@
 {"intents": [
         {"tag": "greeting",
-         "patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Good day"],
-         "responses": ["Hello", "Good to see you again", "Hi there, how can I help?"],
+         "patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Good day", "Namaste", "Hey", "Greetings", "Whats up"],
+         "responses": ["Hello", "Good to see you again", "Hi there, how can I help?", "Hi", "Hey", "Hi there"],
          "context_set": ""
         },
         {"tag": "goodbye",
@@ -9,37 +9,39 @@
          "responses": ["See you later, Alligator", "Have a nice day", "Bye! Come back again soon."]
         },
         {"tag": "thanks",
-         "patterns": ["Thanks", "Thank you", "That's helpful"],
-         "responses": ["Happy to help!", "Any time!", "My pleasure"]
+         "patterns": ["Thanks", "Thank you", "That's helpful", "Thank you very much"],
+         "responses": ["Happy to help!", "Any time!", "My pleasure", "Your welcome"]
         },
         {"tag": "hours",
-         "patterns": ["What are the working hours?", "What are your hours?", "When are you open?" ],
+         "patterns": ["What are the working hours?", "What are office hours?", "When are you open?" ],
          "responses": ["Work hours are usually 9 to 6", "9 AM to 6 PM"]
         },
-        {"tag": "sickleave",
+        {"tag": "sick",
          "patterns": ["How many sick leaves can I take?", "How many sick leaves do I?", "Can I know the amount of sick leaves?" ],
-         "responses": ["There are 5 sick leaves.", "Sick leaves vary from person to person.", "Are you sick?"]
+         "responses": ["There are 5 sick leaves.", "Sick leaves vary from person to person.", "Are you sick?"],
+          "context_set": "sick"
         },
-        {"tag": "casualleave",
+        {"tag": "casual",
          "patterns": ["How many casual leaves can I take?", "How many casual leaves do I have?", "Can I know the amount of casual leaves?" ],
-         "responses": ["You can take upto 3 casual leaves per month", "Casual leaves come to around 30 days per annum"]
+         "responses": ["You can take upto 3 casual leaves per month", "Casual leaves come to around 30 days per annum"],
+          "context_set": "casual"
         },
         {"tag": "canteen",
          "patterns": ["Where can I find the canteen?", "Where is food made?", "I am hungry." ],
          "responses": ["Canteen can be found on the first floor.", "Go to the first floor and take a left from entrance."]
         },
         {"tag": "salary",
-         "patterns": ["When will i get my monthly payment?", "When will my salary will be deposited in my account?", "salary" ],
-         "responses": ["Salary is deposited in your account every first of the month"]
+         "patterns": ["When will i get my monthly salary?", "When will my salary will be deposited in my account?"],
+         "responses": ["Salary is deposited in your account every first of the month", "Please ask the accounts department."]
         },
         {"tag": "aim",
          "patterns": ["What is the goal of this company?", "What does this company aim for?"],
          "responses": ["We are a pharma company, we want to make this world disease free.", "We want to make a medicine for every disease."]
         },
-        {"tag": "totalleaves",
+        {"tag": "leave",
          "patterns": ["What types of leaves I am entitled to?", "How many types of leaves are there?" ],
          "responses": ["You are entitled to 3 types of leaves", "Sick, Casual, Earned"],
-         "context_set": "leaves"
+         "context_set": "leave"
         }
    ]
 }

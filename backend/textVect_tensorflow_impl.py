@@ -8,6 +8,7 @@
 
 import tensorflow as tf
 from tensorflow.python.keras.layers.preprocessing.text_vectorization import TextVectorization
+import numpy as np
 
 from tokenizer import word_tokens
 
@@ -28,4 +29,18 @@ model = tf.keras.models.Sequential()
 model.add(tf.keras.Input(shape=(1,), dtype=tf.string))
 model.add(vectorize_layer)
 input_data = word_tokens
-print(model.predict(input_data))
+d = model.predict(input_data)
+
+
+dt = []
+
+for q in d:
+    r = (q[0])
+    ra = [r]
+    dt.append(ra)
+
+print(dt)
+
+
+
+

@@ -4,7 +4,7 @@ from nltk import LancasterStemmer, word_tokenize
 
 from memory_growth import memory_growth_exception
 from model import create_model
-from input_data import train_features, train_classes, test_features, features, words, intents, classes
+from input_data import train_features, train_classes, features, words, intents, classes, feature_vectors, class_vectors
 from preprocess import punctuation_removal
 from numpy import array
 
@@ -12,7 +12,7 @@ stemmer = LancasterStemmer()
 
 memory_growth_exception()
 
-model = create_model(features, train_classes)
+model = create_model(feature_vectors, class_vectors)
 
 
 def input_sentence_words(sentence):
@@ -29,39 +29,36 @@ def bag_of_words(sentence, word_set):
         for i, words in enumerate(word_set):
             if words == s_words:
                 bag[i] = 1
+    # print(array(bag))
+    # print(word_set)
     return array(bag)
 
 
-error_threshold = 0.30
+threshold = 0.30
 
 
 def classify(sentence):
     # generate probabilities from the model
     results = model.predict([bag_of_words(sentence, words)])[0]
     # filter out predictions below a threshold
-    results = [[i, r] for i, r in enumerate(results) if r > error_threshold]
+    results = [[i, r] for i, r in enumerate(results) if r > threshold]
     # sort by strength of probability
     results.sort(key=lambda x: x[1], reverse=True)
     return_list = []
     for r in results:
-        return_list.append((train_classes[r[0]], r[1]))
-    # return tuple of intent and probability
-    print(return_list)
+        return_list.append((classes[r[0]], r[1]))
+    # return tuple of class and probability
+    # print(results)
+    # print(return_list)
     return return_list
 
 
-def response(sentence):
-    results = classify(sentence)
-    if results:
-        # loop as long as there are matches to process
-        while results:
-            for i in intents['intents']:
-                # find a tag matching the first result
-                if i['tag'] == results[0][0]:
-                    # a random response from the intent
-                    return print(random.choice(i['responses']))
-            results.pop(0)
+print(feature_vectors)
+print(class_vectors)
 
+i = 0
 
-
-classify('what are my sick leaves?')
+while i < 20:
+    g = input()
+    classify(g)
+    i = i + 1

@@ -1,6 +1,7 @@
 import nltk
 import random
 from nltk import LancasterStemmer
+from nltk.corpus import stopwords
 from numpy import array
 
 from file_reader import read_intents_file
@@ -19,16 +20,21 @@ sentences = []
 classes = []
 documents = []
 
+stop_words = set(stopwords.words("english"))
+print(stop_words)
+
 for intent in intents['intents']:
     for pattern in intent['patterns']:
         # pattern = pattern.lower()
         pattern = punctuation_removal(pattern)
         # pattern = get_lemmatized_words(pattern)
         sentences.append(pattern)
-        w = nltk.word_tokenize(pattern)
-        words.extend(w)
-
-        documents.append((w, intent['tag']))
+        tokens = nltk.word_tokenize(pattern)
+        print(tokens)
+        word_tokens = [word for word in tokens if word not in stop_words]
+        print(word_tokens)
+        words.extend(word_tokens)
+        documents.append((word_tokens, intent['tag']))
         # add tags to our classes list
         if intent['tag'] not in classes:
             classes.append(intent['tag'])
@@ -67,36 +73,45 @@ for doc in documents:
 
     training.append([bag_of_words, output_row])
 
-# for h in training:
-#     print(h)
-
 random.shuffle(training)
 training = array(training, dtype=object)
 
+print(training)
+
 # creating training lists
 features = list(training[:, 0])  # feature vectors
-bog_train_classes = list(training[:, 1])  # classes
+y_train = list(training[:, 1])  # classes
+y_test = y_train
+
+print(len(features))
+print(len(y_train))
 
 # print(len(features))
 
-bog_train_features = features[:(len(features) - 5)]
-bog_test_features = features[-5:]
+x_train = features[:(len(features) - 5)]
+x_test = x_train
 # print(len(train_features))
 # print(len(test_features))
 #
 # print("\n\n")
 # print(train_features)
+print(type(x_train[0]))
+print(len(x_train[0]))
 # print(train_classes)
 #
 # print(sentences)
 
+for h in x_train:
+    print(h)
+
+for l in y_train:
+    print(l)
 # --------------------------- TRAINING TESTING VECTOR SECTION END ---------------------
 
 # ------------------- Word2Vec Section -----------------------
 
-word2vec_train_features = word2vec_skipgrams(words)
-word2vec_class_vectors = word2vec_skipgrams(classes)
-
+# word2vec_train_features = word2vec_skipgrams(words)
+# word2vec_class_vectors = word2vec_skipgrams(classes)
 
 # print(feature_vectors)
 # print(class_vectors)
@@ -119,6 +134,5 @@ word2vec_class_vectors = word2vec_skipgrams(classes)
 # print(bog_train_features)
 # print(word2vec_train_features)
 
-print(word2vec_train_features)
-print(word2vec_class_vectors)
-
+# print(word2vec_train_features)
+# print(word2vec_class_vectors)

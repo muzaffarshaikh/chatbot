@@ -6,7 +6,7 @@ from nltk import LancasterStemmer, word_tokenize
 
 from memory_growth import memory_growth_exception
 from model import create_model
-# from input_data import y_train, y_test, x_train, x_test, features, words, classes, intents
+from input_data import y_train, y_test, x_train, x_test, features, words, classes, intents
 from wv import x_train, y_train
 from glove import load_embeddings_dict
 from numpy import array
@@ -21,7 +21,7 @@ memory_growth_exception()
 model = create_model(x_train, y_train)
 
 
-e = load_embeddings_dict()
+embedding = load_embeddings_dict()
 
 print("Input sentence : ")
 g = input().lower()
@@ -32,7 +32,7 @@ arr = g_p.split(" ")
 sent_vector = []
 
 for l in arr:
-    temp = e[l]
+    temp = embedding[l]
     sent_vector.append(temp)
 
 for j in sent_vector:
@@ -47,7 +47,6 @@ print(results)
 results = [[i, r] for i, r in enumerate(results)]
 
 print(results)
-
 # #
 # # x_train, x_test, y_train, y_test = train_test_split(x_train, y_train, test_size=0.2, random_state=1)
 # # x_train, x_val, y_train, y_val = train_test_split(x_train, y_train, test_size=0.2, random_state=1)

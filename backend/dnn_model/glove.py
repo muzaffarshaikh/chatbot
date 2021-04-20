@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def load_embeddings_dict():
+def embeddings():
     File = 'glove.6B.50d.txt'
     print("Loading Glove Model")
     f = open(File, 'r', encoding="utf8")

@@ -7,9 +7,11 @@ from text_lemmatizer import LemNormalize
 def response(user_response, sentTokens):
     bot_response = ''
     sentTokens.append(user_response)
-
     TfidfVectorObject = TfidfVectorizer(tokenizer=LemNormalize, stop_words='english')
     tfidf = TfidfVectorObject.fit_transform(sentTokens)
+    print(tfidf)
+    print(type(tfidf))
+    print(len(tfidf))
     values = cosine_similarity(tfidf[-1], tfidf)
     idx = values.argsort()[0][-2]
     flat = values.flatten()

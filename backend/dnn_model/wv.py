@@ -1,6 +1,6 @@
 import nltk
 from nltk.corpus import stopwords
-from glove import load_embeddings_dict
+from glove import embeddings
 
 from file_reader import read_intents_file
 from preprocess import punctuation_removal
@@ -23,7 +23,7 @@ for intent in intents['intents']:
             word_class_list.append(temp_list)
 
 print(word_class_list)
-embeddings = load_embeddings_dict()
+embeddings = embeddings()
 training = []
 for entry in word_class_list:
     temp = entry

@@ -64,12 +64,6 @@ def input_sentence_words(sentence):
     return sentence_words
 
 
-#
-#
-# # def get_glove_vector(sentence, word_set):
-# #     sentence_words = input_sentence_words(sentence)
-#
-#
 def bag_of_words(sentence, word_set):
     sentence_words = input_sentence_words(sentence)
     bag = [0] * len(word_set)
@@ -96,7 +90,7 @@ def classify_query(sentence):
     return_list = []
     for r in results:
         return_list.append((classes[r[0]], r[1]))
-    # return tuple of class and probability
+    # list of class and probability
     print(return_list)
     return return_list
 

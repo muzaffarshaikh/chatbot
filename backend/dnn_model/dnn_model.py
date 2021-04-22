@@ -12,5 +12,6 @@ def create_model(train_features, train_classes):
     network_layers = tflearn.fully_connected(network_layers, len(train_classes[0]), activation='softmax')
     network_layers = tflearn.regression(network_layers, optimizer='adam', learning_rate=0.01)
     model = tflearn.DNN(network_layers, tensorboard_dir='tflearn_logs')
+    model = tflearn.DNN(network_layers, tensorboard_verbose='3')
     model.fit(train_features, train_classes, n_epoch=1000, batch_size=8, show_metric=True)
     return model

@@ -1,14 +1,13 @@
 # Glove Cosine Test
 
 import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
-from nltk import sent_tokenize
 from nltk.corpus import stopwords
-from preprocess import punctuation_removal
-from glove import load_embeddings_dict
+from test_modules.preprocess import punctuation_removal
+from glove import embeddings
 
 #
-embeddings = load_embeddings_dict()
+embedding_dict = {}
+embedding_dict = embeddings()
 
 stop_words = set(stopwords.words("english"))
 
@@ -35,7 +34,7 @@ for document in documents:
     sentences.append(temp_doc)
 
 doc2vec = []
-#word2vec_dict = {}
+# word2vec_dict = {}
 
 for sentence in sentences:
     cp = sentence
@@ -44,7 +43,7 @@ for sentence in sentences:
     for word in words:
 
         try:
-            w_embedding = np.array(embeddings[word])
+            w_embedding = np.array(embedding_dict[word])
             w_embedding.resize(5)
             for w in w_embedding:
                 sent_embedding.append(w)

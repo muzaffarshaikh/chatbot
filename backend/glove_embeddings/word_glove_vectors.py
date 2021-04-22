@@ -2,8 +2,8 @@ import nltk
 from nltk.corpus import stopwords
 from glove import embeddings
 
-from file_reader import read_intents_file
-from preprocess import punctuation_removal
+from test_modules.file_reader import read_intents_file
+from test_modules.preprocess import punctuation_removal
 
 intents = read_intents_file()
 stop_words = set(stopwords.words("english"))

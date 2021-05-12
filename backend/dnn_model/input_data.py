@@ -16,7 +16,6 @@ classes = []
 documents = []
 
 stop_words = set(stopwords.words("english"))
-print(stop_words)
 
 for intent in intents['intents']:
     for pattern in intent['patterns']:
@@ -32,8 +31,13 @@ for intent in intents['intents']:
         if intent['tag'] not in classes:
             classes.append(intent['tag'])
 
-words = [stemmer.stem(w.lower()) for w in words]  # can be skipped if using lematization
+# words = [stemmer.stem(w.lower()) for w in words]  # can be skipped if using lematization
+words = [w.lower() for w in words]
 words = sorted(list(set(words)))
+
+
+print(sentences)
+print(words)
 
 # remove duplicate classes
 classes = sorted(list(set(classes)))

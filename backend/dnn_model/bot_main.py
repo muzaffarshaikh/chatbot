@@ -8,6 +8,11 @@ from data_preprocess import punctuation_removal
 import numpy as np
 from nltk.tokenize import word_tokenize
 
+import pymysql
+
+connection = pymysql.connect(host="localhost", user="root", passwd="", database="chatbot")
+cursor = connection.cursor()
+
 memory_growth_exception()
 stemmer = LancasterStemmer()
 
@@ -47,7 +52,15 @@ def classify_query(sentence):
     return return_list
 
 
-def bot_response(user_query, USERNAME='mzfrxec'):
+def getQuery(username, parameter):
+    query = "select " + parameter + " from users u, leaves l where u.id=l.user_id and username='" + username + "'"
+    cursor.execute(query)
+    row = cursor.fetchone()
+    entry = str(row[0])
+    return entry
+
+
+def bot_response(user_query, username='mzfrxec'):
     response = ""
     classification = classify_query(user_query)
     print(classification)
@@ -59,9 +72,15 @@ def bot_response(user_query, USERNAME='mzfrxec'):
         while classification:
             for i in intents['intents']:
                 if i['tag'] == classification[0][0]:
-                    # response = random.choice(i['responses'])
-                    response = response + random.choice(i['responses'])
-                    return response
+                    parameter = 'sick'
+                    if classification[0][0] == parameter:
+                        sick_leave = getQuery(username, parameter)
+                        response = "You have " + sick_leave + " sick leave(s)."
+                        return response
+                    else:
+                        # response = random.choice(i['responses'])
+                        response = response + random.choice(i['responses'])
+                        return response
 
 
 while True:

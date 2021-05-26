@@ -17,12 +17,12 @@
          "responses": ["Work hours are usually 9 to 6", "9 AM to 6 PM"]
         },
         {"tag": "sick",
-         "patterns": ["How many sick leaves can I take?", "How many sick leaves do I have?", "Can I know the amount of sick leaves?" ],
+         "patterns": ["Sick leaves can I take?", "Sick leaves do I have?", "Can I know the amount of sick leaves?" ],
          "responses": ["There are 5 sick leaves.", "Sick leaves vary from person to person.", "Are you sick?"],
           "context_set": "sick"
         },
         {"tag": "casual",
-         "patterns": ["How many casual leaves can I take?", "How many casual leaves do I have?", "Can I know the amount of casual leaves?" ],
+         "patterns": ["casual leaves can I take?", "casual leaves do I have?", "Can I know the amount of casual leaves?" ],
          "responses": ["You can take upto 3 casual leaves per month", "Casual leaves come to around 30 days per annum"],
           "context_set": "casual"
         },
@@ -31,6 +31,10 @@
          "responses": ["Canteen can be found on the first floor.", "Go to the first floor and take a left from entrance."]
         },
         {"tag": "salary",
+         "patterns": ["What is my monthly salary?", "What is my salary?", "How much salary do i have."],
+         "responses": ["Please ask the accounts department."]
+        },
+        {"tag": "salaryInquiry",
          "patterns": ["When will i get my monthly salary?", "When will my salary will be deposited in my account?"],
          "responses": ["Salary is deposited in your account every first of the month", "Please ask the accounts department."]
         },

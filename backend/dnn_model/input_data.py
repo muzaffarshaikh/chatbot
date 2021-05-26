@@ -4,8 +4,17 @@ from nltk import LancasterStemmer
 from nltk.corpus import stopwords
 from numpy import array
 
-from file_reader import read_intents_file
 from data_preprocess import punctuation_removal
+
+import json
+
+
+def read_intents_file():
+    filepath = 'corpus/intents.json'
+    with open(filepath) as json_data:
+        intents = json.load(json_data)
+    return intents
+
 
 stemmer = LancasterStemmer()
 intents = read_intents_file()
@@ -31,10 +40,10 @@ for intent in intents['intents']:
         if intent['tag'] not in classes:
             classes.append(intent['tag'])
 
-# words = [stemmer.stem(w.lower()) for w in words]  # can be skipped if using lematization
+wordsWithoutStemming = [w.lower() for w in words]
+words = [stemmer.stem(w.lower()) for w in words]  # can be skipped if using lematization
 words = [w.lower() for w in words]
 words = sorted(list(set(words)))
-
 
 print(sentences)
 print(words)
@@ -74,4 +83,3 @@ class_vec = list(training[:, 1])  # classes
 # x_train = features[:(len(features) - 5)]
 x_train, x_test = features, random.shuffle(features[:5])
 y_train, y_test = class_vec, random.shuffle(class_vec[:2])
-

@@ -1,7 +1,9 @@
 import numpy as np
+import time
 
 
 def embeddings():
+    start = time.time()
     File = 'glove.6B.50d.txt'
     print("Loading Glove Model")
     f = open(File, 'r', encoding="utf8")
@@ -13,13 +15,7 @@ def embeddings():
         embeddings_dict[word] = wordEmbedding
     print(len(embeddings_dict), " words loaded!")
     # print(embeddings_dict)
+    end = time.time()
+    print("time taken", end - start)
+    f.close()
     return embeddings_dict
-
-
-def get_w2v(sentence, model):
-    """
-    :param sentence: inputs a single sentences whose word embedding is to be extracted.
-    :param model: inputs glove model.
-    :return: returns numpy array containing word embedding of all words    in input sentence.
-    """
-    return np.array([model.get(val, np.zeros(100)) for val in sentence.split()], dtype=np.float64)

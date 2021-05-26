@@ -1,8 +1,12 @@
 import numpy as np
-# from glove import embeddings
+
+from glove import embeddings
+
+emb = embeddings()
+print(len(emb))
 
 
-def getSentenceGloVector(sentence, glove_embeddings, word_vector_size, sentence_vector_size):
+def getSentenceGloVectorSum(sentence, glove_embeddings, word_vector_size, sentence_vector_size):
     pointer = sentence
     words = sentence.split(" ")
     sent_embedding = []
@@ -16,6 +20,16 @@ def getSentenceGloVector(sentence, glove_embeddings, word_vector_size, sentence_
     return np_embedding
 
 
-# g = getSentenceGloVector("hello how are you doing", embeddings(), 5, 30)
-# print(g)
-# print(len(g))
+def getSentenceGloVectorMean(sentence, glove_embeddings):
+    pointer = sentence
+    words = sentence.split(" ")
+    sent_embedding = []
+    for word in words:
+        w_embedding = np.array(glove_embeddings[word])
+        sent_embedding.append(w_embedding)
+    sent_embedding_mean = np.mean(list(sent_embedding), axis=0)
+    return sent_embedding_mean
+
+
+g = getSentenceGloVectorMean("hello how are you", emb)
+print(g)

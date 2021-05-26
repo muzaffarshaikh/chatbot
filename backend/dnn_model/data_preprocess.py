@@ -5,7 +5,6 @@ from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords, wordnet
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk import pos_tag
-import nltk
 
 # nltk.download('averaged_perceptron_tagger')
 # nltk.download('stopwords')
@@ -71,26 +70,3 @@ def get_tokenized_sentences(text):
     tokens = sent_tokenize(text)
     sent_tokens = [word for word in tokens if word not in stop_words]
     return sent_tokens
-
-
-def preprocess(text):
-    t1 = punctuation_removal(text)
-    t2 = get_lemmatized_words(t1)
-    return t2
-
-# def pre_process_data(corpus, number_conversion, remove_punctuation, stemming, lemmatization):
-#
-#     if number_conversion:
-#         corpus = convert_number_to_word(corpus)
-#
-#     if remove_punctuation:
-#         corpus = remove_punctuation(corpus)
-#
-#     if stemming:
-#         corpus = get_stemmed_words(corpus)
-#
-#     if lemmatization:
-#         corpus = get_lemmatized_words(corpus)
-#
-#
-#     return corpus

@@ -64,3 +64,4 @@
 # model = tf.DNN(network_layers, tensorboard_verbose='3', tensorboard_dir='tf_logs')
 # his = model.fit(x_train, y_train, n_epoch=100, batch_size=8, show_metric=True)
 
+

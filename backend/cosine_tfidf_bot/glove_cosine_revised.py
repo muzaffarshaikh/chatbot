@@ -25,7 +25,6 @@ print("Time Taken: ", end - start)
 
 while True:
     print("Enter Query: ")
-    start = time.time()
     input_query = input()
     sentence = input_query.lower()
     sentence = convert_number_to_word(sentence)
@@ -33,6 +32,7 @@ while True:
     sentence = punctuation_removal(sentence)
     words = sentence.split(" ")
     sent_embedding = []
+
     for word in words:
         w_embedding = np.array(embedding[word])
         sent_embedding.append(w_embedding)
@@ -49,7 +49,8 @@ while True:
 
     max_cosine_dist_doc = max(cosine_dict, key=cosine_dict.get)
 
-    print("Response: ", max_cosine_dist_doc)
-    end = time.time()
+    print(cosine_dict[max_cosine_dist_doc])
 
-    print("Time Taken: ", end - start)
+    print("Response: ", max_cosine_dist_doc)
+
+    cosine_dict.clear()

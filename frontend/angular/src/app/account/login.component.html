@@ -1,0 +1,79 @@
+﻿<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    /* body  { */
+  /* background-image: url("img1.JPEG");
+  background-color: #d40e0e;
+} */
+/* html{
+        background: url('img1.JPEG') no-repeat center center fixed;
+        height:50px;
+        width: 100px;
+        background-size:cover;
+} */
+   .card-body{
+    background-color: #f0fae1;
+   } 
+
+  .input-group{
+    width: 450px;
+    align-content:center;
+    padding-right: 15px;
+  }
+   
+</style>
+</head>
+<body>
+
+<h3 class="card-header" style="width: 29.5rem;">Login</h3>
+<div class="card-body" style="width: 29.3rem;">
+    <form [formGroup]="logform" (ngSubmit)="onSubmit()">
+          <br>
+        <div class="input-group mx-sm-1 mb-3 pb-2" >
+            <div class="input-group-append">
+                <span class="input-group-text"><i class="fa fa-envelope-o fa-fw"></i></span>
+			</div>
+            <input type="text" placeholder="Email address" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                <div *ngIf="f.email.errors.required">Email is required</div>
+                <div *ngIf="f.email.errors.email">Email is invalid</div>
+            </div>
+        </div>
+        
+        <div class="input-group mx-sm-1 mb-2 pb-2">
+            <div class="input-group-append">
+                <span class="input-group-text"><i class="fa fa-key fa-fw"></i></span>
+			</div>
+            <input type="password" placeholder="Password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required">Password is required</div>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group col">
+                <button [disabled]="loading" class="log_button">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Login
+                </button>
+            </div>
+        </div>
+            <br>
+            <div class="form-group col text-center">
+            <a>New user?</a>
+            <a routerLink="../register" class="btn btn-link">Register</a>
+            <div class="form-group col text-center">
+                <a routerLink="../forgot-password" class="btn btn-link pr-0">Forgot Password?</a>
+            </div>
+       </div>
+
+               
+
+          
+        
+    </form>
+</div>
+
+</body>
+</html>

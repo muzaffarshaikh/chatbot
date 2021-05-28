@@ -79,8 +79,8 @@ def getSalaryQuery(email):
 def bot_response(user_inputuery, email='gg@gmail.com'):
     response = ""
     classification = classify_query(user_inputuery)
-    print(classification)
-    print(classification[0][0])
+    # print(classification)
+    # print(classification[0][0])
     if len(classification) == 0:
         response = response + "Can you rephrase it?"
         return print(response)
@@ -106,7 +106,7 @@ def bot_response(user_inputuery, email='gg@gmail.com'):
                         return response
 
 
-while True:
-    user_input = input("User: ")
-    bot_r = bot_response(user_input)
-    print("Bot: ", bot_r)
+# while True:
+#     user_input = input("User: ")
+#     bot_r = bot_response(user_input)
+#     print("Bot: ", bot_r)

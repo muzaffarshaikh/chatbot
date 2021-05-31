@@ -7,23 +7,23 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from input_data import x_train, y_train, classes, intents, words, punctuation_removal
 # from memory_growth import memory_growth_exception
-# from dnn_model import create_model
+from dnn_model import create_model
 
 stop_words = set(stopwords.words("english"))
 stemmer = LancasterStemmer()
 connection = pymysql.connect(host="localhost", user="root", passwd="", database="chatbot")
 cursor = connection.cursor()
 
-# model = create_model(x_train, y_train)
+model = create_model(x_train, y_train, train=False)
 # model.save('model.tflearn')
 
-network_layers = tflearn.input_data(shape=[None, len(x_train[0])])
-network_layers = tflearn.fully_connected(network_layers, 10)
-network_layers = tflearn.fully_connected(network_layers, 10)
-network_layers = tflearn.fully_connected(network_layers, len(y_train[0]), activation='softmax')
-network_layers = tflearn.regression(network_layers, optimizer='adam')
-model = tflearn.DNN(network_layers)
-model.load('./model.tflearn')
+# network_layers = tflearn.input_data(shape=[None, len(x_train[0])])
+# network_layers = tflearn.fully_connected(network_layers, 10)
+# network_layers = tflearn.fully_connected(network_layers, 10)
+# network_layers = tflearn.fully_connected(network_layers, len(y_train[0]), activation='softmax')
+# network_layers = tflearn.regression(network_layers, optimizer='adam')
+# model = tflearn.DNN(network_layers)
+# model.load('./model.tflearn')
 
 
 def input_sentence_words(sentence):
@@ -106,7 +106,7 @@ def bot_response(user_inputuery, email='gg@gmail.com'):
                         return response
 
 
-# while True:
-#     user_input = input("User: ")
-#     bot_r = bot_response(user_input)
-#     print("Bot: ", bot_r)
+while True:
+    user_input = input("User: ")
+    bot_r = bot_response(user_input)
+    print("Bot: ", bot_r)

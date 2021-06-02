@@ -1,9 +1,7 @@
 import tflearn
-from tensorflow.python.framework import ops
 
 
 def create_model(x_train, y_train, train):
-    ops.reset_default_graph()
     network_layers = tflearn.input_data(shape=[None, len(x_train[0])])
     network_layers = tflearn.fully_connected(network_layers, 10)
     network_layers = tflearn.fully_connected(network_layers, 10)

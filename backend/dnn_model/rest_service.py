@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_mysqldb import MySQL
 
-from user_profile import register_db, login_db
+from user_profile import register_db, login_db, save_chat
 from bot_main import bot_response
 
 app = Flask(__name__)
@@ -39,16 +39,10 @@ def register_service():
         db_response = register_db(email, name, password)
         print(db_response)
 
-        global register_input
-        register_input = [firstName, lastName, email, password, confirmPassword]
-
-    elif request.method == 'POST':
-        msg = 'Please fill out the form !'
-        print(msg)
-        return jsonify(register_input)
-
-    if request.method == "GET":  # GET is not invoked only POST # Same logic as POST
-        return jsonify(register_input)
+        if db_response[0] is True:
+            return jsonify({'response': True})
+        else:
+            return jsonify({'response': False, 'message': db_response[1]})
 
 
 @app.route('/login_data/', methods=['GET', 'POST'])
@@ -61,22 +55,11 @@ def login_service():
         db_response = login_db(email, password)
         if db_response is True:
             print("Logged in successfully !")
+            return jsonify({'response': True})
         else:
             print("Incorrect username / password !")
-
-        login_Input = [email, password]
-        return jsonify(login_Input)
-
-    if request.method == "GET":  # GET is not invoked only POST
-        # Same logic as POST
-        return jsonify([login_input])
-
-
-# sending the users response from the above function to the frontend Angular
-@app.route("/user_response/", methods=['GET'])
-def response_user():
-    #  global bot_response,user_responses
-    return jsonify([register_input, login_input])
+            message = 'Incorrect username / password !'
+            return jsonify({'response': False, 'message': message})
 
 
 # function for getting the users response from the frontend Angular
@@ -84,11 +67,16 @@ def response_user():
 def chat_messaging():
     # make provision for request ID.
     if request.method == "POST":
-        client_request = request.get_json()['userinput']  # gets the json data from angular which is in array {"userinput":"as"}
-        server_response = bot_response(client_request)
+        email = 'gg@gmail.com'
+        # gets the json data from angular which is in array {"userinput":"as"}
+        client_request = request.get_json()['userinput']
+        server_response = bot_response(client_request, email)
         # Server side terminal statements
         print("Request from Client (User) : " + client_request)
         print("Response from Server (Bot) : " + server_response)
+
+        save_chat(email, client_request, server_response)
+
         return jsonify({'response': server_response, 'userinput': client_request})
 
 

@@ -1,15 +1,10 @@
-import json
-
 from flask import Flask, session
 from flask_cors import CORS
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
-import datetime
-import time
-import pymysql
 
-connection = pymysql.connect(host="localhost", user="root", passwd="", database="chatbot")
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 CORS(app)
@@ -25,10 +20,10 @@ mysql = MySQL(app)
 
 
 def register_db(email, name, password):
+    hashed_password = generate_password_hash(password)
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('SELECT * FROM users WHERE email = % s', (email,))
     account = cursor.fetchone()
-
     if account:
         msg = 'Account already exists !'
         return False, msg
@@ -39,8 +34,7 @@ def register_db(email, name, password):
         msg = 'name must contain only characters and numbers !'
         return False, msg
     else:
-        cursor.execute('INSERT INTO users VALUES (NULL, % s, % s, % s)',
-                       (email, name, password))
+        cursor.execute('INSERT INTO users VALUES (NULL, % s, % s, % s)', (email, name, hashed_password))
         mysql.connection.commit()
         msg = 'You have successfully registered !'
         return True, msg
@@ -48,14 +42,17 @@ def register_db(email, name, password):
 
 def login_db(email, password):
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('SELECT * FROM users WHERE email = % s AND password = % s', (email, password,))
+    cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
     account = cursor.fetchone()
-    if account:
+    stored_password = account['password']
+    if check_password_hash(stored_password, password):
         session['loggedin'] = True
         session['id'] = account['id']
         session['email'] = account['email']
+        print("'Logged in Succesfully !")
         return True
     else:
+        print("'Logged in FAILED !")
         return False
 
 
@@ -66,23 +63,3 @@ def logout():
     # RETURNING.
     # By default itll be FALSE since user will be logged in
     # return TRUE when function is invoked and route to login page
-
-
-def save_chat(email, client_request, server_response):
-    cursor = connection.cursor()
-
-    emailQuery = 'select id from users where email="' + email + '"'
-    cursor.execute(emailQuery)
-    userIDTuple = cursor.fetchone()
-    userID = userIDTuple[0]
-
-    formatted_date = str(datetime.date.today())
-    current_date = formatted_date
-
-    formatted_time = time.strftime("%H:%M:%S", time.localtime())
-    current_time = formatted_time
-
-    chatJSONObject = str(json.dumps({'user_message': client_request, 'bot_response': server_response}))
-
-    cursor.execute('INSERT INTO chats VALUES (NULL, % s, % s, % s, % s)', (userID, chatJSONObject, current_date, current_time))
-    connection.commit()

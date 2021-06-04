@@ -1,4 +1,6 @@
-import tflearn
+import datetime
+import json
+import time
 import random
 import pymysql
 import numpy as np
@@ -95,6 +97,21 @@ def bot_response(user_input_query, email):
                         # response = random.choice(i['responses'])
                         response = response + random.choice(i['responses'])
                         return response
+
+
+def save_chat(email, client_request, server_response):
+    cursor.execute('select id from users where email="' + email + '"')
+    userID = str(cursor.fetchone()[0])
+    chatJSONObject = str(json.dumps({'user_message': client_request, 'bot_response': server_response}))
+    current_date = str(datetime.date.today())
+    current_time = time.strftime("%H:%M:%S", time.localtime())
+    cursor.execute('INSERT INTO chats VALUES (NULL, % s, % s, % s, % s)', (userID, chatJSONObject, current_date, current_time))
+    connection.commit()
+
+
+# def load_chat(email):
+
+
 
 
 # while True:

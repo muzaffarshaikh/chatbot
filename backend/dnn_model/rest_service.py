@@ -2,8 +2,8 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_mysqldb import MySQL
 
-from user_profile import register_db, login_db, save_chat
-from bot_main import bot_response
+from user_profile import register_db, login_db
+from bot_main import bot_response, save_chat
 
 app = Flask(__name__)
 CORS(app)
@@ -33,11 +33,8 @@ def register_service():
         email = request.get_json()['email']
         password = request.get_json()['password']
         confirmPassword = request.get_json()['confirmPassword']
-
         name = firstName + " " + lastName
-        print(name, email, password, confirmPassword)  # prints the extracted value
         db_response = register_db(email, name, password)
-        print(db_response)
 
         if db_response[0] is True:
             return jsonify({'response': True})
@@ -50,8 +47,6 @@ def login_service():
     if request.method == "POST" and 'email' in request.get_json() and 'password' in request.get_json():
         email = request.get_json()['email']
         password = request.get_json()['password']
-        print(email, password)
-
         db_response = login_db(email, password)
         if db_response is True:
             print("Logged in successfully !")
@@ -67,7 +62,7 @@ def login_service():
 def chat_messaging():
     # make provision for request ID.
     if request.method == "POST":
-        email = 'gg@gmail.com'
+        email = 'johndoe@gmail.com'
         # gets the json data from angular which is in array {"userinput":"as"}
         client_request = request.get_json()['userinput']
         server_response = bot_response(client_request, email)

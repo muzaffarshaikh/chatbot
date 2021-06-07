@@ -48,12 +48,13 @@ def login_service():
         email = request.get_json()['email']
         password = request.get_json()['password']
         db_response = login_db(email, password)
-        if db_response is True:
+        print(db_response)
+        message = db_response[1]
+        if db_response[0] is True:
             print("Logged in successfully !")
             return jsonify({'response': True})
         else:
-            print("Incorrect username / password !")
-            message = 'Incorrect username / password !'
+            print(message)
             return jsonify({'response': False, 'message': message})
 
 

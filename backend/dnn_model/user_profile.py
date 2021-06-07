@@ -41,19 +41,23 @@ def register_db(email, name, password):
 
 
 def login_db(email, password):
+    msg = ""
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
     account = cursor.fetchone()
-    stored_password = account['password']
-    if check_password_hash(stored_password, password):
-        session['loggedin'] = True
-        session['id'] = account['id']
-        session['email'] = account['email']
-        print("'Logged in Succesfully !")
-        return True
+    if account is not None:
+        stored_password = account['password']
+        if check_password_hash(stored_password, password):
+            session['loggedin'] = True
+            session['id'] = account['id']
+            session['email'] = account['email']
+            return True
+        else:
+            msg = "Incorrect Password"
+            return False, msg
     else:
-        print("'Logged in FAILED !")
-        return False
+        msg = "Account does not exist."
+        return False, msg
 
 
 def logout():

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<title>
+Chatbot
+</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+    #navlist {
+        max-width: 100%;
+        background-color: white;
+        position: fixed;
+        width: 100%;
+        padding: 10px;
+        line-height: 1.8;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+        border-radius: 5px;
+    }
+
+    #navlist a {
+        max-width: 100%;
+        float: left;
+        display: block;
+        color: black;
+        text-align: center;
+        padding: 5px;
+        text-decoration: none;
+        font-size: 20px;
+        font-family: "Raleway", sans-serif;
+    }
+
+    .navlist-right {
+        float: right;
+    }
+
+    #navlist a:hover {
+        background-color: #ddd;
+        color: black;
+        border-radius: 10px;
+    }
+
+    #navlist a.active {
+        background-color: #9FBA29;
+        color: black;
+        border-radius: 10px;
+    }
+
+    #navlist i.fa {
+        padding: 5px;
+
+    }
+
+    .outerDiv {
+        max-width: 100%;
+        background-color: #F0FAE1;
+        color: #fff;
+        height: 720px;
+        width: 160px;
+        padding: 68px;
+    }
+
+    .leftDiv {
+        max-width: 100%;
+        background-color: #F0FAE1;
+        height: 600px;
+        width: 45%;
+        position: absolute;
+        top: 120px;
+        left: 120px;
+    }
+
+    .rightDiv {
+        max-width: 100%;
+        background-color: #F0FAE1;
+        color: #000;
+        height: 600px;
+        width: 45%;
+        position: fixed;
+        right: 120px;
+        top: 120px;
+    }
+
+    .text {
+        text-align: center;
+        font-size: 1.3rem;
+        position: relative;
+        left: 40px;
+        top: 30%;
+        width: 90%;
+    }
+
+    .logo {
+        width: 2px;
+        height: 2px;
+        position: absolute;
+        top: -4px;
+        left: 0;
+    }
+
+    .image {
+        position: fixed;
+        max-width: 100%;
+        display: block;
+        right: 60%;
+    }
+
+    .contact {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+
+    .fa {
+        padding-left: 10px;
+    }
+
+    #footer {
+        position: fixed;
+        padding: 10px 10px 0px 10px;
+        bottom: 0;
+        width: 100%;
+        height: 60px;
+        background: grey;
+    }
+</style>
+
+<body>
+    <div id="navlist">
+        <div id="logo" class="logo">
+            <img src="assets\images\chatbot_logo.png" width="80" height="80">
+        </div>
+        <div class="navlist-right">
+            <a class="active" href="#"><i class="fa fa-home"></i>HOME</a>
+            <a routerLink="../account/login"><i class="fa fa-user"></i>LOGIN</a>
+            <a routerLink="../account/register"><i class="fa fa-th"></i>REGISTER</a>
+        </div>
+    </div>
+
+    <div class="outerDiv">
+        <div class="leftDiv">
+            <div class="image">
+                <img src="assets\images\chatbot.png" width="500" height="500">
+            </div>
+        </div>
+        <div class="rightDiv">
+            <div class="text">Hello there, I am bot_name. I am your friendly guide to answer your most frequent HR
+                queries.
+                Ask away about your salary and your leaves! I already know them all, but I won't tell you unless you
+                ask! Just login and chat with me.
+                I am still not perfect but I will try to answer your queries with my utmost effort.</div>
+        </div>
+    </div>
+
+    <div class="w3-container w3-light-grey" style="padding:12px 16px" id="footer">
+        <div class="contact" style="margin-top:15px">
+            <p>
+                <i class="fa fa-map-marker fa-fw w3-xlarge w3-margin-left"></i> Goa, India
+                <i class="fa fa-phone fa-fw w3-xlarge w3-margin-left"></i> Phone: +91 9876543210
+                <i class="fa fa-envelope fa-fw w3-xlarge w3-margin-left"> </i> Email: mail@mail.com
+            </p>
+            <br>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<style>
+  
+  .input-group{
+    width: 450px;
+    align-content:center;
+    padding-right: 65px;
+  }
+  .card-body{
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 40%;
+  border-radius: 5px;
+  background-color: #f0fae1;
+} 
+.card-header{
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 40%;
+}
+.logo{
+    width:2px;
+    height:2px;
+    position: absolute;
+    top:-4px;
+    left:0;
+}    
+#navlist {
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    padding: 10px;
+    line-height: 1.8;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px;
+        }  
+  #navlist a {
+    float:left;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: "Raleway", sans-serif;
+        }
+  .navlist-right{
+    float:right;
+		    }
+  #navlist a:hover {
+    background-color: #ddd;
+    color: black;
+		border-radius: 10px;
+        }
+	#navlist a.active {
+    background-color: #9FBA29;
+    color: black;
+		border-radius: 10px;
+        }
+  #navlist i.fa {
+    padding:5px;
+        }
+</style>
+<body>
+  <div id="navlist">     
+    <div id="logo" class="logo" >
+    <img src="assets\images\chatbot_logo.png" width = "80" height = "80">
+    </div>
+    <div class="navlist-right">
+    <a href="#"><i class="fa fa-home"></i>HOME</a>
+    <a  routerLink="../login" ><i class="fa fa-user"></i>LOGIN</a>
+    <a class="active" routerLink="../register"><i class="fa fa-th"></i>REGISTER</a>
+    </div>
+   </div>
+   <div class="lform" style="padding-top: 70px; padding-left: 100px;">
+  <h3 class="card-header" style="width: 29.3rem;  margin-left: 30%;  background-color:#e9ecef ;">Register</h3>
+<div class="card-body" style="width: 29.3rem;  margin-left: 30%; ">
+    <form [formGroup]="regform"  (ngSubmit)="onSubmit()" method="POST">
+    <div class="form-group">
+        <label for="firstName" [ngClass]="regform.controls['firstName'].invalid ? 'text-danger' : ''">First Name:</label>
+        <div class="input-group mx-sm-1 mb-3" >
+            <div class="input-group-append">
+                <span class="input-group-text"><i class="fa fa-user-o" aria-hidden="true"></i></span>
+            </div>
+        <input type="text"  placeholder="First Name" formControlName="firstName" class="form-control"
+         [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+        <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+            <div *ngIf="regform.controls['firstName'].hasError('required')">First Name is required</div>
+            <div *ngIf="regform.controls['firstName'].hasError('pattern')">First name shouldn't contain numbers or special characters</div>
+        </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="lastName" [ngClass]="regform.controls['lastName'].invalid ? 'text-danger' : ''">Last Name:</label>
+        <div class="input-group mx-sm-1 mb-3" >
+            <div class="input-group-append">
+                <span class="input-group-text"><i class="fa fa-user-o" aria-hidden="true"></i></span>
+            </div>
+        <input type="text" placeholder="Last Name" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+        <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+            <div *ngIf="regform.controls['firstName'].hasError('required')">Last Name is required</div>
+            <div *ngIf="regform.controls['firstName'].hasError('pattern')">Last name shouldn't contain numbers or special characters</div>
+        </div>
+    </div>
+</div>
+        <div class="form-group">
+            <label for="email" [ngClass]="regform.controls['email'].invalid ? 'text-danger' : ''">Email:</label>
+            <div class="input-group mx-sm-1 mb-3" >
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="fa fa-envelope-o "></i></span>
+                </div>
+                <input id="email" placeholder="example@mail.com" formControlName="email" type="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }"/>
+           <div  *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="regform.controls['email'].hasError('required')">Email is required</div>
+            <div *ngIf="regform.controls['email'].hasError('pattern')">Email must be a valid email address</div>
+        </div> 
+    </div> 
+</div> 
+            <div class="form-group">
+            <label [ngClass]="regform.controls['password'].invalid ? 'text-danger' : ''">Password:</label>
+            <div class="input-group mx-sm-1 mb-3" >
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="fa fa-unlock-alt"></i></span>
+                </div>
+                <input id="password" formControlName="password"  [type]="fieldTextType ? 'text' : 'password'" class="form-control" [ngClass]="regform.controls['password'].invalid ? 'is-invalid' : ''">
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                    <i class="fa"
+                    [ngClass]="{
+                      'fa-eye-slash': !fieldTextType,
+                      'fa-eye': fieldTextType
+                    }"
+                    (click)="toggleFieldTextType()"
+                  ></i>
+                </span>
+              </div> 
+            </div>
+            <label class="col" style="font-size:13px;" [ngClass]="regform.controls['password'].hasError('required') || regform.controls['password'].hasError('minlength')  ? 'text-danger' : 'text-success'">
+              <i class="material-icons">{{ regform.controls['password'].hasError('required') ||
+                regform.controls['password'].hasError('minlength') ? 'cancel' :
+                'check_circle' }}</i>
+              Must be at least 8 characters!
+            </label>
+        <br>
+            <label class="col" style="font-size:13px;" [ngClass]="regform.controls['password'].hasError('required') || regform.controls['password'].hasError('hasNumber')  ? 'text-danger' : 'text-success'">
+              <i class="material-icons">{{ regform.controls['password'].hasError('required') ||
+                regform.controls['password'].hasError('hasNumber') ? 'cancel' :
+                'check_circle' }}</i>
+              Must contain at least 1 number!
+            </label>
+            <label class="col" style="font-size:13px;" [ngClass]="regform.controls['password'].hasError('required') || regform.controls['password'].hasError('hasCapitalCase')  ? 'text-danger' : 'text-success'">
+              <i class="material-icons">{{ regform.controls['password'].hasError('required') ||
+                regform.controls['password'].hasError('hasCapitalCase') ? 'cancel' :
+                'check_circle' }}</i>
+              Must contain at least 1 in Capital Case!
+            </label>
+            <label class="col" style="font-size:13px;" [ngClass]="regform.controls['password'].hasError('required') || regform.controls['password'].hasError('hasSmallCase')  ? 'text-danger' : 'text-success'">
+              <i class="material-icons">{{ regform.controls['password'].hasError('required') ||
+                regform.controls['password'].hasError('hasSmallCase') ? 'cancel' :
+                'check_circle' }}</i>
+              Must contain at least 1 Letter in Small Case!
+            </label>
+            <label class="col" style="font-size:13px;" [ngClass]="regform.controls['password'].hasError('required') || regform.controls['password'].hasError('hasSpecialCharacters') ? 'text-danger' : 'text-success'">
+              <i class="material-icons">{{ regform.controls['password'].hasError('required') ||
+                regform.controls['password'].hasError('hasSpecialCharacters') ? 'cancel' :
+                'check_circle' }}</i>
+              Must contain at least 1 Special Character!
+            </label>
+        </div>
+        <div class="form-group">
+            <label [ngClass]="regform.controls['confirmPassword'].invalid ? 'text-danger' : ''">Confirm Password:</label>
+            <div class="input-group mx-sm-1 mb-3" >
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="fa fa-lock" aria-hidden="true"></i></span>
+                </div>
+                <input  [type]="repeatFieldTextType ? 'text' : 'password'" placeholder="Confirm Password" formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+                <div class="input-group-append">
+                  <span class="input-group-text">
+                  <i class="fa"
+                  [ngClass]="{
+                    'fa-eye-slash': !repeatFieldTextType,
+                    'fa-eye': repeatFieldTextType
+                  }"
+                  (click)="toggleRepeatFieldTextType()"
+                ></i>
+              </span>
+                </div> 
+                <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                    <div *ngIf="f.confirmPassword.errors.required">Password confirmation is required</div>
+                    <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button [disabled]="loading" class="reg_button">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Submit
+            </button>
+        </div>
+    </form>
+</div>
+</div>
+</body>
+</html>

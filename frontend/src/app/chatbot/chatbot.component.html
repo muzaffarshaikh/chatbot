@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<section class="msger">
+  <header class="msger-header">
+    <div class="msger-header-title" *ngIf="loading" >
+      <i class="fas fa-comment-alt"></i> ChatBot
+    </div>
+    <div class="line_break">
+      <nav id="primary_nav_wrap">
+        <ul>
+          <li class=" ">
+            <div>
+              <div class="tt"></div><div class="tt"></div><div class="tt"></div>
+            </div>  
+                <ul>
+                  <li ><a (click)="closemodal()" onclick="document.getElementById('id01').style.display='block'">Edit Profile</a></li>
+                  <li><a (click)="closemodal()" onclick="document.getElementById('id02').style.display='block'">Log Out</a></li>
+                </ul>
+              </li>
+          </ul>
+        </nav>
+    </div>
+    <!-- Edit Moadal Dialog content    -->
+    <div id="id01" class="modal">
+    <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
+    <form class="modal-content" action="/action_page.php">
+      <div class="container">
+        <h3>Edit Profile</h3><br>
+        <img src="https://image.flaticon.com/icons/svg/145/145867.svg" alt="Profile" width="220" height="220"><br>      
+        <form [formGroup]="edit_profile_form" method="POST">
+          <label>
+            <input formControlName="user_image" type="file" id="img" style="display: none;">
+            <div class="hover_effect text_centered">Upload Profile Picture</div>
+          </label>
+          <div class="page">
+            <label class="field field_v1">
+            <input formControlName="user_fname" class="field__input" placeholder="e.g. Taylour" value="{{ user_fname }}">
+              <span class="field__label-wrap">
+                <span class="field__label">First name</span>
+              </span>
+            </label>
+            <label class="field field_v1">
+              <input formControlName="user_lname" class="field__input" placeholder="e.g. Swift " value="{{ user_lname }}" >
+                <span class="field__label-wrap">
+                  <span class="field__label">Last name</span>
+                </span>
+            </label>    
+          </div>
+        </form>
+        
+          <div class="clearfix">
+            <button (click)="onSave()" type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn button10">Save</button>&nbsp;&nbsp;
+            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="deletebtn button20">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- End of Edit Moadal Dialog content    -->
+
+    <!-- Cancel Modal Dialog content -->
+    <div id="id02" class="modal">
+      <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">×</span>
+      <form class="modal-content" action="/action_page.php">
+        <div class="container">
+          <h3 class="center">Are You Sure You want to exit the Conversation?</h3><br>
+        <div class="clearfix">
+            <button (click)="onLogout()" type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn button10">Ok</button>&nbsp;&nbsp;
+            <button type="button" onclick="document.getElementById('id02').style.display='none'" class="deletebtn button20">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- End of Cancel Modal content -->
+  </header>
+
+    <main class="msger-chat">
+      <div class="msg left-msg">
+        <div
+        class="msg-img"
+        style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"></div>
+
+        <div class="msg-bubble">
+          <!-- <div class="msg-info">
+            <div class="msg-info-name">BOT</div>
+            <div class="msg-info-time">{{ time }}</div>
+          </div> -->
+          <div class="msg-text">
+            Wlecome {{ user_fname }}&nbsp;{{user_lname}}! Im your virtual assistant to answereing your
+            most frequent general purpose and HR related queries.
+            How can I help you today?
+          </div>
+        </div>
+      </div>
+
+      <p id="message_response_section"></p>
+      <p id="user_input_section"> </p>
+      <p id="bot_response_animation"> </p>
+
+      <div id="buttom"></div>
+      
+      <!-- <button (click)="Off_days()" class="btn btn-3" values="Off_days">Off Days</button> &nbsp;&nbsp;&nbsp; -->
+      <!-- <button (click)="my_leaves()" class="btn btn-2" value="my_leaves">My Leaves</button>&nbsp;&nbsp;&nbsp;
+      <button (click)="my_profile()" class="btn btn-1" value="my_profile">My Profile</button>&nbsp;&nbsp;&nbsp; -->
+
+    </main>
+    
+    <form autocomplete="off" class="msger-inputarea" [formGroup]="message" method="POST">
+      <input [(ngModel)]='textbox' formControlName="userinput" type="text" id="msger-input" class="msger-input" placeholder="Type a message...">&nbsp;&nbsp;
+      <button type="submit" (click)="send()" id="btn"  [disabled]="!textbox"><i class="fa fa-paper-plane"></i></button>
+    </form>
+    
+</section>
+</body>
+</html>
+

@@ -47,9 +47,6 @@ words = [stemmer.stem(w.lower()) for w in words]  # can be skipped if using lema
 words = [w.lower() for w in words if w not in stop_words]
 words = sorted(list(set(words)))
 
-# print(sentences)
-# print(words)
-
 # remove duplicate classes
 classes = sorted(list(set(classes)))
 

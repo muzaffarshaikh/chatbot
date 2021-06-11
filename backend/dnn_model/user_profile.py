@@ -1,15 +1,12 @@
+import re
+import MySQLdb.cursors
 from flask import Flask, session
 from flask_cors import CORS
 from flask_mysqldb import MySQL
-import MySQLdb.cursors
-import re
-
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 CORS(app)
-
-app.secret_key = 'your secret key'
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
@@ -54,10 +51,10 @@ def login_db(email, password):
             return True
         else:
             msg = "Incorrect Password"
-            return False, msg
+            return False
     else:
         msg = "Account does not exist."
-        return False, msg
+        return False
 
 
 def logout():
@@ -67,3 +64,21 @@ def logout():
     # RETURNING.
     # By default itll be FALSE since user will be logged in
     # return TRUE when function is invoked and route to login page
+
+
+def userprofile(email):
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT name FROM users WHERE email = %s', (email,))
+    row = cursor.fetchone()
+    # print(row['name'])
+    userinfo = str(row['name'])
+    return userinfo
+
+
+def editprofile(name, email):
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    # cursor.execute('UPDATE users SET name= %s WHERE email = %s', (name, email))
+    cursor.execute('UPDATE users SET name = %s WHERE(email= %s AND id <> 0)', (name, email))
+    msg = 'successfully updated your profile'
+    print(msg)
+    return msg

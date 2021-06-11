@@ -1,4 +1,5 @@
-import datetime
+import datetime as dt
+from datetime import datetime
 import json
 import time
 import random
@@ -65,7 +66,8 @@ def getSalaryQuery(email):
         response = "You are not entitled to any salary. Please consult the Accounts Department."
         return response
     else:
-        response = "You salary is Rs. " + str(row[0]) + " \nHRA = Rs. " + str(row[1]) + " \nAllowance = Rs. " + str(row[2])
+        response = "You salary is Rs. " + str(row[0]) + " \nHRA = Rs. " + str(row[1]) + " \nAllowance = Rs. " + str(
+            row[2])
         return response
 
 
@@ -100,20 +102,43 @@ def bot_response(user_input_query, email):
 
 
 def save_chat(email, client_request, server_response):
-    cursor.execute('select id from users where email="' + email + '"')
-    userID = str(cursor.fetchone()[0])
+    cursor.execute('select * from users where email="' + email + '"')
+    row = cursor.fetchone()
+    userID = row[0]
     chatJSONObject = str(json.dumps({'user_message': client_request, 'bot_response': server_response}))
-    current_date = str(datetime.date.today())
+    current_date = str(dt.date.today())
     current_time = time.strftime("%H:%M:%S", time.localtime())
-    cursor.execute('INSERT INTO chats VALUES (NULL, % s, % s, % s, % s)', (userID, chatJSONObject, current_date, current_time))
+    timestamp = datetime.today().timestamp()
+    cursor.execute('INSERT INTO chats VALUES (NULL, % s, % s, % s, % s, % s)',
+                   (userID, chatJSONObject, current_date, current_time, timestamp))
     connection.commit()
 
 
-# def load_chat(email):
+def load_chat(email):
+    cursor.execute('select id, email from users where email="' + email + '"')
+    userID = str(cursor.fetchone()[0])
+    cursor.execute('select message, timestamp from chats where user_id="' + userID + '"')
+    messages = cursor.fetchall()
+    message_dict = {}
+    for message in messages:
+        message_dict[message[1]] = message[0]
+    sorted_md = {}
+    for i in sorted(message_dict.keys()):
+        sorted_md[i] = message_dict[i]
+
+    message_list = []
+
+    for i in sorted_md.keys():
+        jsonObj = sorted_md[i]
+        msg = json.loads(jsonObj)
+        user = msg['user_message']
+        bot = msg['bot_response']
+        message_list.extend([[user, bot]])
+
+    return message_list
 
 
-
-
+# While loop for testing bot in Back-end
 # while True:
 #     user_input = input("User: ")
 #     bot_r = bot_response(user_input)

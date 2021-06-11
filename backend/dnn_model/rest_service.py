@@ -2,8 +2,8 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_mysqldb import MySQL
 
-from user_profile import register_db, login_db
-from bot_main import bot_response, save_chat
+from user_profile import register_db, login_db, userprofile, editprofile
+from bot_main import bot_response, save_chat, load_chat
 
 app = Flask(__name__)
 CORS(app)
@@ -42,20 +42,73 @@ def register_service():
             return jsonify({'response': False, 'message': db_response[1]})
 
 
+logged_user_email = ""
+response = False
+message = ""
+
+
 @app.route('/login_data/', methods=['GET', 'POST'])
 def login_service():
     if request.method == "POST" and 'email' in request.get_json() and 'password' in request.get_json():
         email = request.get_json()['email']
         password = request.get_json()['password']
+
+        global logged_user_email
+        global response, message
+        logged_user_email = email
+
         db_response = login_db(email, password)
         print(db_response)
-        message = db_response[1]
-        if db_response[0] is True:
+        message = db_response
+        if db_response is True:
             print("Logged in successfully !")
-            return jsonify({'response': True})
+            response = True
+            return jsonify({'response': True, 'email': email})
         else:
             print(message)
-            return jsonify({'response': False, 'message': message})
+            return jsonify({'response': False, 'message': message, 'email': email})
+
+
+@app.route('/logged_user/', methods=['GET', 'POST'])
+def log_user():
+    if request.method == "GET":
+        global response
+        if response:
+            print("Logged response -> ", response)
+            response = False
+            return jsonify({'response': True})
+        else:
+            # print("not logged in")
+            return jsonify({'response': False})
+
+
+@app.route('/logged_out_user/', methods=['GET', 'POST'])
+def log_out_user():
+    if request.method == "POST":
+        logout = request.get_json()
+        global response
+        response = False
+        print("logout response -> ", response)
+        return jsonify({'response': response})
+
+
+@app.route('/validation/', methods=['GET', 'POST'])
+def validate():
+    if request.method == "GET":
+        global message
+        print(message)
+        return jsonify({'response': message})
+
+
+@app.route('/load_chat/', methods=['GET', 'POST'])
+def load_chat_into_convo():
+    email = logged_user_email
+    conversation = load_chat(email)
+    for data_item in conversation:
+        user = data_item[0]
+        bot = data_item[1]
+
+        return jsonify({'response': bot, 'userinput': user})
 
 
 # function for getting the users response from the frontend Angular
@@ -63,24 +116,26 @@ def login_service():
 def chat_messaging():
     # make provision for request ID.
     if request.method == "POST":
-        email = 'johndoe@gmail.com'
+        email = logged_user_email
         # gets the json data from angular which is in array {"userinput":"as"}
         client_request = request.get_json()['userinput']
         server_response = bot_response(client_request, email)
         # Server side terminal statements
+        print("Logged in User: " + logged_user_email)
         print("Request from Client (User) : " + client_request)
         print("Response from Server (Bot) : " + server_response)
 
         save_chat(email, client_request, server_response)
 
-        return jsonify({'response': server_response, 'userinput': client_request})
+        return jsonify({'response': server_response, 'userinput': client_request, 'email': logged_user_email})
 
 
 @app.route('/user_info/', methods=['GET', 'POST'])
 def user_profile():
     # global user_fname, user_lname
-    user_fname = 'Taylor'
-    user_lname = 'Swift'
+    user_details = userprofile(logged_user_email).split(' ')
+    user_fname = user_details[0]
+    user_lname = user_details[1]
     return jsonify({'user_fname': user_fname, 'user_lname': user_lname})
 
 
@@ -91,8 +146,10 @@ def edit_user_profile():
         new_user_image = new_info['user_image']
         new_user_fname = new_info['user_fname']
         new_user_lname = new_info['user_lname']
+        name = new_user_fname + " " + new_user_lname
+        message_f = editprofile(name, logged_user_email)
         print(new_user_image, new_user_fname, new_user_lname)
-    return jsonify({'user_fname': new_user_fname, 'user_lname': new_user_lname})
+    return jsonify({'user_fname': new_user_fname, 'user_lname': new_user_lname, 'response': message_f})
 
 
 if __name__ == '__main__':

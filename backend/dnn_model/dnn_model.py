@@ -10,6 +10,7 @@ def create_model(x_train, y_train, train):
     if train is True:
         model = tflearn.DNN(network_layers, tensorboard_dir='tflearn_logs')
         model.fit(x_train, y_train, n_epoch=1000, batch_size=8, show_metric=True)
+        model.save("model.dnn")
     else:
         model = tflearn.DNN(network_layers)
         model.load('./model.tflearn')

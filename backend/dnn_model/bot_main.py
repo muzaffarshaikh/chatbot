@@ -18,7 +18,7 @@ connection = pymysql.connect(host="localhost", user="root", passwd="", database=
 cursor = connection.cursor()
 
 # Make the train parameter False if model save files are present in the root directory.
-model = create_model(x_train, y_train, train=False)
+model = create_model(x_train, y_train, train=True)
 
 
 def input_sentence_words(sentence):
